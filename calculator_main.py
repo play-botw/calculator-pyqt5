@@ -21,10 +21,10 @@ class Main(QDialog):
         layout_display.addWidget(display)
 
         # 사칙연상 버튼 생성
-        button_add = QPushButton("+")
-        button_subtract = QPushButton("-")
-        button_multiply = QPushButton("x")
-        button_division = QPushButton("/")
+        button_add = QPushButton("＋")
+        button_subtract = QPushButton("－")
+        button_multiply = QPushButton("×")
+        button_division = QPushButton("÷")
         button_modular = QPushButton("%")
         button_inverse = QPushButton("1/x")
         button_power = QPushButton("x^2")
@@ -32,13 +32,13 @@ class Main(QDialog):
 
         # 사칙연산 버튼을 클릭했을 때, 각 사칙연산 부호가 수식창에 추가될 수 있도록 시그널 설정
         button_add.clicked.connect(
-            lambda state, operation="+": self.button_operation_clicked(operation))
+            lambda state, operator="+": self.button_operator_clicked(operator))
         button_subtract.clicked.connect(
-            lambda state, operation="-": self.button_operation_clicked(operation))
+            lambda state, operator="-": self.button_operator_clicked(operator))
         button_multiply.clicked.connect(
-            lambda state, operation="*": self.button_operation_clicked(operation))
+            lambda state, operator="*": self.button_operator_clicked(operator))
         button_division.clicked.connect(
-            lambda state, operation="/": self.button_operation_clicked(operation))
+            lambda state, operator="/": self.button_operator_clicked(operator))
 
         # =, clear, backspace 버튼 생성
         button_equal = QPushButton("=")
@@ -105,28 +105,28 @@ class Main(QDialog):
     ### functions ###
     #################
     def number_button_clicked(self, num):
-        equation = self.equation.text()
-        equation += str(num)
-        self.equation.setText(equation)
+        entry = self.entry.text()
+        entry += str(num)
+        self.entry.setText(entry)
 
-    def button_operation_clicked(self, operation):
-        equation = self.equation.text()
-        equation += operation
-        self.equation.setText(equation)
+    def button_operator_clicked(self, operator):
+        entry = self.entry.text()
+        entry += operator
+        self.entry.setText(entry)
 
     def button_equal_clicked(self):
-        equation = self.equation.text()
-        solution = eval(equation)
+        entry = self.entry.text()
+        solution = eval(entry)
         self.solution.setText(str(solution))
 
     def button_clear_clicked(self):
-        self.equation.setText("")
+        self.entry.setText("")
         self.solution.setText("")
 
     def button_backspace_clicked(self):
-        equation = self.equation.text()
-        equation = equation[:-1]
-        self.equation.setText(equation)
+        entry = self.entry.text()
+        entry = entry[:-1]
+        self.entry.setText(entry)
 
 
 if __name__ == '__main__':
