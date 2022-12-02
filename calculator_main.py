@@ -1,5 +1,6 @@
 import sys
 from PyQt5.QtWidgets import *
+import PyQt5.QtGui
 import math
 
 
@@ -15,8 +16,11 @@ class Main(QDialog):
         layout_display = QGridLayout()
         layout_button = QGridLayout()
 
-        # 수식 입력과 답 출력을 위한 QLineEdit 위젯 생성
+        # 숫자 입력과 답 출력을 위한 QLineEdit 위젯 생성
         self.display = QLineEdit("")
+
+        # 숫자 입력을 실수 범위로 제한
+        self.display.setValidator(PyQt5.QtGui.QDoubleValidator(self))
 
         # layout_display 레이아웃에 display 추가
         layout_display.addWidget(self.display)
