@@ -13,7 +13,7 @@ python -m pip install pyqt5
 ## Built With
 
 - [PyQt5](https://pypi.org/project/PyQt5/) - PyQt5
-- [Python](https://www.python.org/) - Pythone
+- [Python](https://www.python.org/) - Python
 
 ## Authors
 
