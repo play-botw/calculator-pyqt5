@@ -23,9 +23,9 @@ class Main(QDialog):
         layout_display.addWidget(display, 0, 0)
 
         # 사칙연상 버튼 생성
-        button_plus = QPushButton("+")
-        button_minus = QPushButton("-")
-        button_product = QPushButton("x")
+        button_sum = QPushButton("+")
+        button_subtract = QPushButton("-")
+        button_multiply = QPushButton("x")
         button_division = QPushButton("/")
         button_modular = QPushButton("%")
         button_inverse = QPushButton("1/x")
@@ -33,19 +33,19 @@ class Main(QDialog):
         button_root = QPushButton("√x")
 
         # 사칙연산 버튼을 클릭했을 때, 각 사칙연산 부호가 수식창에 추가될 수 있도록 시그널 설정
-        button_plus.clicked.connect(
+        button_sum.clicked.connect(
             lambda state, operation="+": self.button_operation_clicked(operation))
-        button_minus.clicked.connect(
+        button_subtract.clicked.connect(
             lambda state, operation="-": self.button_operation_clicked(operation))
-        button_product.clicked.connect(
+        button_multiply.clicked.connect(
             lambda state, operation="*": self.button_operation_clicked(operation))
         button_division.clicked.connect(
             lambda state, operation="/": self.button_operation_clicked(operation))
 
         # 사칙연산 버튼을 layout_operation 레이아웃에 추가
-        layout_operation.addWidget(button_plus)
-        layout_operation.addWidget(button_minus)
-        layout_operation.addWidget(button_product)
+        layout_operation.addWidget(button_sum)
+        layout_operation.addWidget(button_subtract)
+        layout_operation.addWidget(button_multiply)
         layout_operation.addWidget(button_division)
 
         # =, clear, backspace 버튼 생성
