@@ -24,6 +24,7 @@ class Main(QDialog):
         button_inverse = QPushButton("1/x")
         button_power = QPushButton("x^2")
         button_root = QPushButton("√x")
+        button_sign = QPushButton("±")
 
         # 단항 연산자 버튼을 클릭했을 때, 함수 호출
         button_inverse.clicked.connect(
@@ -32,6 +33,8 @@ class Main(QDialog):
             lambda state, operator="x^2": self.operate_unary(operator))
         button_root.clicked.connect(
             lambda state, operator="root(x)": self.operate_unary(operator))
+        button_sign.clicked.connect(
+            lambda state, operator="sign": self.operate_binary(operator))
 
         # 이항 연산자 버튼 생성
         button_add = QPushButton("＋")
@@ -49,6 +52,13 @@ class Main(QDialog):
             lambda state, operator="*": self.oprate_binary(operator))
         button_division.clicked.connect(
             lambda state, operator="/": self.oprate_binary(operator))
+
+        # 소수점 버튼 생성
+        button_dot = QPushButton(".")
+
+        # 소수점 버튼을 클릭했을 때, 시그널 설정
+        button_dot.clicked.connect(
+            lambda state, num=".": self.display_number(num))
 
         # 기능 버튼 생성
         button_equal = QPushButton("=")
@@ -79,9 +89,11 @@ class Main(QDialog):
 
         layout_button.addWidget(button_add, 4, 3)
 
+        layout_button.addWidget(button_sign, 5, 0)
+        layout_button.addWidget(button_dot, 5, 2)
         layout_button.addWidget(button_equal, 5, 3)
 
-        # 숫자 버튼 생성하고, layout_button 레이아웃에 추가
+        # 숫자 버튼을 생성하고, layout_button 레이아웃에 추가
         # 각 숫자 버튼을 클릭했을 때, 숫자가 수식창에 입력 될 수 있도록 시그널 설정
         number_button_dict = {}
         for number in range(0, 10):
@@ -93,17 +105,6 @@ class Main(QDialog):
                 layout_button.addWidget(number_button_dict[number], 4-a, b)
             elif number == 0:
                 layout_button.addWidget(number_button_dict[number], 5, 1)
-
-        # 소숫점 버튼과 00 버튼을 입력하고 시그널 설정
-        button_dot = QPushButton(".")
-        button_dot.clicked.connect(
-            lambda state, num=".": self.display_number(num))
-        layout_button.addWidget(button_dot, 3, 2)
-
-        button_double_zero = QPushButton("00")
-        button_double_zero.clicked.connect(
-            lambda state, num="00": self.display_number(num))
-        layout_button.addWidget(button_double_zero, 3, 0)
 
         # 각 레이아웃을 main_layout 레이아웃에 추가
         main_layout.addLayout(layout_display)
