@@ -156,7 +156,13 @@ class Main(QDialog):
         self.display.setText("")
 
     def equal(self):
-        operend = float(self.display.text())
+        if (self.display.text() == ""):
+            # 이항 연산자 버튼을 누른 후, 바로 = 버튼을 눌렀을 때,
+            # 이항 연산자 버튼을 누르기 전에 입력한 값을 피연산자로 한 번 더 사용한다.
+            operend = self.pre_operend
+        else:
+            operend = float(self.display.text())
+
         if (self.pre_operator == "+"):
             self.pre_operend = self.pre_operend + operend
         elif (self.pre_operator == "-"):
