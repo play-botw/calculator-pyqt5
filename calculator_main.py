@@ -27,6 +27,10 @@ class Main(QDialog):
         button_minus = QPushButton("-")
         button_product = QPushButton("x")
         button_division = QPushButton("/")
+        button_modular = QPushButton("%")
+        button_inverse = QPushButton("1/x")
+        button_power = QPushButton("x^2")
+        button_root = QPushButton("√x")
 
         # 사칙연산 버튼을 클릭했을 때, 각 사칙연산 부호가 수식창에 추가될 수 있도록 시그널 설정
         button_plus.clicked.connect(
@@ -47,6 +51,7 @@ class Main(QDialog):
         # =, clear, backspace 버튼 생성
         button_equal = QPushButton("=")
         button_clear = QPushButton("Clear")
+        button_clear_entry = QPushButton("CE")
         button_backspace = QPushButton("Backspace")
 
         # =, clear, backspace 버튼 클릭 시 시그널 설정
