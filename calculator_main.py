@@ -153,7 +153,6 @@ class Main(QDialog):
         else:
             self.pre_operend = operend
         self.pre_operator = operator
-        print(self.pre_operend)
         self.display.setText("")
 
     def equal(self):
