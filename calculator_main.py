@@ -1,5 +1,6 @@
 import sys
 from PyQt5.QtWidgets import *
+import math
 
 
 class Main(QDialog):
@@ -15,10 +16,14 @@ class Main(QDialog):
         layout_button = QGridLayout()
 
         # 수식 입력과 답 출력을 위한 QLineEdit 위젯 생성
-        display = QLineEdit("")
+        self.display = QLineEdit("")
 
         # layout_display 레이아웃에 display 추가
-        layout_display.addWidget(display)
+        layout_display.addWidget(self.display)
+
+        # 연산자와 피연산자를 저장할 변수 생성
+        self.pre_operator = ""
+        self.pre_operend = 0
 
         # 단항 연산자 버튼 생성
         button_inverse = QPushButton("1/x")
@@ -34,7 +39,7 @@ class Main(QDialog):
         button_root.clicked.connect(
             lambda state, operator="root(x)": self.operate_unary(operator))
         button_sign.clicked.connect(
-            lambda state, operator="sign": self.operate_binary(operator))
+            lambda state, operator="sign": self.operate_unary(operator))
 
         # 이항 연산자 버튼 생성
         button_add = QPushButton("＋")
@@ -45,13 +50,13 @@ class Main(QDialog):
 
         # 이항 연산자 버튼을 클릭했을 때, 함수 호출
         button_add.clicked.connect(
-            lambda state, operator="+": self.oprate_binary(operator))
+            lambda state, operator="+": self.operate_binary(operator))
         button_subtract.clicked.connect(
-            lambda state, operator="-": self.oprate_binary(operator))
+            lambda state, operator="-": self.operate_binary(operator))
         button_multiply.clicked.connect(
-            lambda state, operator="*": self.oprate_binary(operator))
+            lambda state, operator="*": self.operate_binary(operator))
         button_division.clicked.connect(
-            lambda state, operator="/": self.oprate_binary(operator))
+            lambda state, operator="/": self.operate_binary(operator))
 
         # 소수점 버튼 생성
         button_dot = QPushButton(".")
@@ -117,37 +122,69 @@ class Main(QDialog):
     ### functions ###
     #################
     def display_number(self, num):
-        entry = self.entry.text()
-        entry += str(num)
-        self.entry.setText(entry)
+        operend = self.display.text()
+        operend += str(num)
+        self.display.setText(operend)
 
     def operate_unary(self, operator):
-        entry = self.entry.text()
-        entry += operator
-        self.entry.setText(entry)
+        operend = float(self.display.text())
+        if (operator == "1/x"):
+            operend = 1/operend
+        elif (operator == "x^2"):
+            operend = math.pow(operend, 2)
+        elif (operator == "root(x)"):
+            operend = math.sqrt(operend)
+        elif (operator == "sign"):
+            operend = -(operend)
+        self.display.setText(str(operend))
 
     def operate_binary(self, operator):
-        entry = self.entry.text()
-        entry += operator
-        self.entry.setText(entry)
+        operend = float(self.display.text())
+        if (self.pre_operator == "+"):
+            self.pre_operend = self.pre_operend + operend
+        elif (self.pre_operator == "-"):
+            self.pre_operend = self.pre_operend - operend
+        elif (self.pre_operator == "*"):
+            self.pre_operend = self.pre_operend * operend
+        elif (self.pre_operator == "/"):
+            self.pre_operend = self.pre_operend / operend
+        elif (self.pre_operator == "%"):
+            self.pre_operend = self.pre_operend % operend
+        else:
+            self.pre_operend = operend
+        self.pre_operator = operator
+        print(self.pre_operend)
+        self.display.setText("")
 
     def equal(self):
-        entry = self.entry.text()
-        solution = eval(entry)
-        self.solution.setText(str(solution))
+        operend = float(self.display.text())
+        if (self.pre_operator == "+"):
+            self.pre_operend = self.pre_operend + operend
+        elif (self.pre_operator == "-"):
+            self.pre_operend = self.pre_operend - operend
+        elif (self.pre_operator == "*"):
+            self.pre_operend = self.pre_operend * operend
+        elif (self.pre_operator == "/"):
+            self.pre_operend = self.pre_operend / operend
+        elif (self.pre_operator == "%"):
+            self.pre_operend = self.pre_operend % operend
+        else:
+            self.pre_operend = operend
+        self.pre_operator = ""
+        self.display.setText(str(self.pre_operend))
 
     def clear(self):
-        self.entry.setText("")
-        self.solution.setText("")
+        self.display.setText("")
+        self.pre_operator = ""
+        self.pre_operend = 0
 
     def clear_entry(self):
-        self.entry.setText("")
-        self.solution.setText("")
+        self.display.setText("")
 
     def backspace(self):
-        entry = self.entry.text()
-        entry = entry[:-1]
-        self.entry.setText(entry)
+        operend = self.display.text()
+        operend = operend[:-1]
+        self.display.setText(operend)
 
 
 if __name__ == '__main__':
